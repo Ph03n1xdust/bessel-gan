@@ -8,7 +8,7 @@ The goal of BesselGAN is to generate structures which locally "look like" (have 
 The advantage compared to random searches is that the output of the GAN is supposed to be already close to physically relevant structures, so relaxations are faster and less wasteful.
 
 # Preparation
-BesselGAN relies on [https://github.com/Madsen-s-research-group/neuralil-public-releases/tree/main/src/neuralil](NeuralIL) for the descriptor generaton, so it has to be installed in the same environment.
+BesselGAN relies on [NeuralIL](https://github.com/Madsen-s-research-group/neuralil-public-releases/tree/main/src/neuralil) for the descriptor generaton, so it has to be installed in the same environment.
 
 # Usage
 Two use cases are shown in the example jupyter notebooks:
