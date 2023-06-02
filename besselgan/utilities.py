@@ -6,7 +6,7 @@ from besselgan.models import CriticModel, GeneratorModel
 
 
 def get_max_R_CUT(atoms_arr: Sequence[Atoms]):
-    """Calculates the maximum possible cutoff radius for a list of structures 
+    """Calculates the maximum possible cutoff radius for a list of structures
         with periodic boundary conditions.
 
     Args:
@@ -72,8 +72,8 @@ def create_generate_descriptor(descriptor_method: Callable):
     Returns:
         A function which generates descriptors of the chosen atoms in a given
         structure. It uses five arguments, the position of all atoms, the types
-        of all atoms, the positions of the chosen atoms, the types of the 
-        chosen atoms and the unit cell respectively. 
+        of all atoms, the positions of the chosen atoms, the types of the
+        chosen atoms and the unit cell respectively.
     """
 
     @jax.jit
@@ -92,9 +92,9 @@ def create_generate_batch_descriptor(descriptor_method: Callable):
 
     Returns:
         A function which generates descriptors of the chosen atoms in a batch
-        of structures. It uses five arguments, the position of all atoms, the 
-        types of all atoms, the positions of the chosen atoms, the types of the 
-        chosen atoms and the unit cell respectively. 
+        of structures. It uses five arguments, the position of all atoms, the
+        types of all atoms, the positions of the chosen atoms, the types of the
+        chosen atoms and the unit cell respectively.
     """
 
     def generate_descriptor(allpos, alltype, pos, type, cell):
@@ -112,10 +112,10 @@ def create_generate_structures(
     Args:
         generator: The GeneratorModel object used to generate the input of the
             postprocessor.
-        postprocess: A function which creates a structure based on the 
+        postprocess: A function which creates a structure based on the
             generator output.
         n_latent: The number of latent variables.
-        
+
     Returns:
         A function which generates n_batch structures given the generator
         weights and (n_batch*n_latent) latent variables. The generated

@@ -51,8 +51,8 @@ class CriticModel(nn.Module):
     external descriptor generator method and returns the critic value.
 
     Args:
-        features: The sequence of hidden layer widths
-        activation: The activation function
+        features: The sequence of hidden layer widths.
+        activation: The activation function.
     """
 
     features: Sequence[int]
