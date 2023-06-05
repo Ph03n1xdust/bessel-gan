@@ -124,13 +124,12 @@ def create_critic_step(
         optimizer state and PRNG key.
     """
     generate_batch_descriptor = create_generate_batch_descriptor(descriptor_method)
+    generate_batch = jax.vmap(generator.apply, (None, 0), 0)
+    criticize_batch = jax.vmap(critic.apply, (None, 0), 0)
+    postprocess_batch = jax.vmap(postprocess)
 
     @jax.jit
     def critic_step(params_crit, params_gen, opt_state_crit, real_desc, rng):
-        generate_batch = jax.vmap(generator.apply, (None, 0), 0)
-        criticize_batch = jax.vmap(critic.apply, (None, 0), 0)
-        postprocess_batch = jax.vmap(postprocess)
-
         rng, key = jax.random.split(rng)
         fake_latent = jax.random.normal(key, (n_batch, generator.n_latent))
         intermediate = generate_batch(params_gen, fake_latent)
@@ -191,12 +190,11 @@ def create_gradient_penalty_step(
         critic optimizer state and PRNG key.
     """
     generate_batch_descriptor = create_generate_batch_descriptor(descriptor_method)
+    generate_batch = jax.vmap(generator.apply, (None, 0), 0)
+    postprocess_batch = jax.vmap(postprocess)
 
     @jax.jit
     def critic_gp_step(params_crit, params_gen, opt_state_crit, real_desc, rng):
-        generate_batch = jax.vmap(generator.apply, (None, 0), 0)
-        postprocess_batch = jax.vmap(postprocess)
-
         rng, key = jax.random.split(rng)
         fake_latent = jax.random.normal(key, (n_batch, generator.n_latent))
         intermediate = generate_batch(params_gen, fake_latent)
@@ -258,13 +256,12 @@ def create_generator_step(
         state and PRNG key.
     """
     generate_batch_descriptor = create_generate_batch_descriptor(descriptor_method)
+    generate_batch = jax.vmap(generator.apply, (None, 0), 0)
+    criticize_batch = jax.vmap(critic.apply, (None, 0), 0)
+    postprocess_batch = jax.vmap(postprocess)
 
     @jax.jit
     def generator_step(params_crit, params_gen, opt_state_gen, rng):
-        generate_batch = jax.vmap(generator.apply, (None, 0), 0)
-        criticize_batch = jax.vmap(critic.apply, (None, 0), 0)
-        postprocess_batch = jax.vmap(postprocess)
-
         rng, key = jax.random.split(rng)
         fake_latent = jax.random.normal(key, (n_batch, generator.n_latent))
 
