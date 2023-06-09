@@ -84,13 +84,13 @@ def make_real_sampler(
         type_positions[t] = np.where(types == t)[0]
 
     def sampler(rng):
-        result = np.zeros(shape=expected_shape)
+        result = jnp.zeros(shape=expected_shape)
 
         for t in type_positions:
             rng, key = jax.random.split(rng)
             indices = type_positions[t]
-            result[:, indices, :] = jax.random.choice(
-                key, training_dict[t], (n_batch, len(indices))
+            result = result.at[:, indices, :].set(
+                jax.random.choice(key, training_dict[t], (n_batch, len(indices)))
             )
 
         return result, rng
