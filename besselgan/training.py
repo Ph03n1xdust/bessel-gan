@@ -318,12 +318,13 @@ def create_full_training_step(
 
 
     Returns:
-        A method which does one step in the critic training. It uses the
-        current critic weights, the current generator weights, the critic
-        optimizer state, a batch of "real" descriptors and a PRNG key
-        respectively. It returns with the updated critic weights, critic
-        optimizer state and PRNG key.
+        A method which does one full training step. It uses the
+        current generator weights, the generator optimizer state,
+        critic weights, critic optimizer state and a PRNG key respectively.
+        It returns with the updated generator weights, generator optimizer
+        state, critic weights, critic optimizer state and the next PRNG key.
     """
+    
     sampler = make_real_sampler(types, n_batch, training_dict)
 
     train_step_gen = create_generator_step(
