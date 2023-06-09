@@ -360,15 +360,13 @@ def create_full_training_step(
             params_crit, params_gen, opt_state_gen, rng
         )
         for _ in range(n_crit_per_gen):
-            rng, key = jax.random.split(rng)
-            real_desc, rng = sampler(key)
+            real_desc, rng = sampler(rng)
             real_desc = real_desc.reshape((n_batch * n_points, -1))
             params_crit, opt_state_crit, rng = train_step_crit(
                 params_crit, params_gen, opt_state_crit, real_desc, rng
             )
             for _ in range(n_gp_per_crit):
-                rng, key = jax.random.split(rng)
-                real_desc, rng = sampler(key)
+                real_desc, rng = sampler(rng)
                 real_desc = real_desc.reshape((n_batch * n_points, -1))
                 params_crit, opt_state_crit, rng = train_step_gp(
                     params_crit, params_gen, opt_state_crit, real_desc, rng
